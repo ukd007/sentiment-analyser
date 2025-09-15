@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Comments</title>
+  <link rel="stylesheet" href="styles/uploadComment.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Comments</h1>
+    <p class="subtitle">
+      Import stakeholder comments for analysis. You can upload a CSV file or paste text directly.
+    </p>
+
+    <div class="upload-section">
+      <!-- Upload CSV File -->
+      <div class="upload-card">
+        <div class="card-header">
+          <span class="icon">📤</span>
+          <div>
+            <h2>Upload CSV File</h2>
+            <p class="desc">Upload a CSV file containing stakeholder comments</p>
+          </div>
+        </div>
+
+        <div class="upload-box">
+          <input type="file" id="csvFile" accept=".csv" hidden>
+          <label for="csvFile" class="upload-label">
+            ⬆ Click to upload or drag and drop
+          </label>
+          <p class="file-info">CSV files only. Maximum file size: 10MB</p>
+        </div>
+
+        <div class="csv-format">
+          <h3>CSV Format:</h3>
+          <ul>
+            <li>Column 1: Comment ID (optional)</li>
+            <li>Column 2: Comment text</li>
+            <li>Column 3: Stakeholder name (optional)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Paste Text Comments -->
+      <div class="upload-card">
+        <div class="card-header">
+          <span class="icon">📝</span>
+          <div>
+            <h2>Paste Text Comments</h2>
+            <p class="desc">Directly paste comments for immediate analysis</p>
+          </div>
+        </div>
+
+        <textarea placeholder="Paste Stakeholder comments here....."></textarea>
+
+        <div class="button-group">
+          <button class="btn clear">Clear</button>
+        </div>
+
+        <p class="tip">💡 Tip: Separate multiple comments with blank lines for better analysis</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -17,6 +17,11 @@ app.get("/", (req, res) => {
   res.render("user/home");
 });
 
+app.get("/uploadComment", (req, res) => {
+  res.render("user/uploadComment"); 
+});
+
+
 // Start server
 app.listen(8080, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
