@@ -20,7 +20,12 @@ app.get("/", (req, res) => {
 app.get("/uploadComment", (req, res) => {
   res.render("user/uploadComment"); 
 });
-
+app.get("/sentiment", (req, res) => {
+  res.render("user/sentiment"); 
+});
+app.get("/wordcloud", (req, res) => {
+  res.render("user/wordCloud"); 
+});
 
 // Start server
 app.listen(8080, () => {

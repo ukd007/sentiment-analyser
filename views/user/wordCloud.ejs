@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Cloud Visualisation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles/wordCloud.css"> 
+</head>
+<body>
+  <div class="container-fluid p-4">
+    
+    <!-- Title -->
+    <div class="row mb-4">
+      <div class="col text-center">
+        <h2><b>World Cloud Visualisation</b></h2>
+        <p>Visualize the most frequently mentioned keywords and themes across all comments</p>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row text-center mb-4">
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stat-box">1,238<br><small>Total Words</small></div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stat-box">156<br><small>Unique Terms</small></div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stat-box">89<br><small>Key Themes</small></div>
+      </div>
+      <div class="col-md-3 col-6 mb-3">
+        <div class="stat-box">4.5<br><small>Avg. Frequency</small></div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="row mb-4 text-center">
+      <div class="col">
+        <button class="btn btn-success me-2">
+          <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+        <button class="btn btn-dark">
+          <i class="bi bi-box-arrow-down"></i> Export
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row g-4">
+      
+      <!-- Top Keywords -->
+      <div class="col-md-6">
+        <div class="card card-custom p-3">
+          <h4><b>Top Keywords</b></h4>
+          <p class="text-muted">Most frequently mentioned terms</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>1. legislation - 156 mentions</span>
+              <span class="keyword-status positive">
+                <i class="bi bi-arrow-up-right"></i> positive
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>2. environment - 102 mentions</span>
+              <span class="keyword-status neutral">
+                <i class="bi bi-dash"></i> neutral
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>3. budget - 96 mentions</span>
+              <span class="keyword-status negative">
+                <i class="bi bi-arrow-down-right"></i> negative
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>4. implementation - 56 mentions</span>
+              <span class="keyword-status positive">
+                <i class="bi bi-arrow-up-right"></i> positive
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>5. community - 42 mentions</span>
+              <span class="keyword-status negative">
+                <i class="bi bi-arrow-down-right"></i> negative
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Trending Topics -->
+      <div class="col-md-6">
+        <div class="card card-custom p-3">
+          <h4><b>Trending Topics</b></h4>
+          <p class="text-muted">Emerging themes and increasing mentions</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Environmental Impact - 92 mentions
+              <span class="badge bg-success">
+                <i class="bi bi-graph-up"></i> +25%
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Budget Concerns - 87 mentions
+              <span class="badge bg-success">
+                <i class="bi bi-graph-up"></i> +18%
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Timeline Issues - 66 mentions
+              <span class="badge bg-success">
+                <i class="bi bi-graph-up"></i> +15%
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Stakeholder Input - 35 mentions
+              <span class="badge bg-success">
+                <i class="bi bi-graph-up"></i> +12%
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Implementation - 16 mentions
+              <span class="badge bg-success">
+                <i class="bi bi-graph-up"></i> +08%
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</body>
+</html>

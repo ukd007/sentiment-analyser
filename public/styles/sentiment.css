@@ -1,0 +1,149 @@
+/* Overall page and container styling */
+body {
+    background-color: #f7fff7;
+}
+
+.container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card base styles */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Specific card section styling */
+
+/* Overall Sentiment Section */
+.overall-sentiment {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+}
+
+/* Main number cards (Positive, Neutral, Negative) */
+.sentiment-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.sentiment-card h6 {
+    color: #6c757d;
+    font-weight: 600;
+}
+
+.sentiment-card .display-6 {
+    font-size: 2.5rem;
+}
+
+.sentiment-card .small {
+    font-weight: 500;
+}
+
+/* Positive Card Styling */
+.positive-card {
+    background-color: #e6f7ea; /* Light green background */
+    border: 1px solid #b3e6c0;
+}
+
+.positive-card .badge {
+    background-color: #28a745 !important;
+}
+
+.positive-card::before {
+    content: '↗';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    color: #28a745;
+    transform: rotate(-45deg);
+    font-weight: bold;
+    opacity: 0.5;
+}
+
+/* Neutral Card Styling */
+.neutral-card {
+    background-color: #f2f4f7; /* Light gray background */
+    border: 1px solid #d4dbe3;
+}
+
+.neutral-card .badge {
+    background-color: #6c757d !important;
+}
+
+.neutral-card::before {
+    content: '-';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2.5rem;
+    color: #6c757d;
+    font-weight: bold;
+    opacity: 0.5;
+}
+
+/* Negative Card Styling */
+.negative-card {
+    background-color: #ffeaea; /* Light red background */
+    border: 1px solid #f3baba;
+}
+
+.negative-card .badge {
+    background-color: #dc3545 !important;
+}
+
+.negative-card::before {
+    content: '↘';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    color: #dc3545;
+    transform: rotate(45deg);
+    font-weight: bold;
+    opacity: 0.5;
+}
+
+/* Comment-by-Comment Analysis section */
+.comment-analysis {
+    background-color: #f0f8f1; /* Very light green */
+    border: 1px solid #b3e6c0;
+}
+
+.comment-analysis .card {
+    background-color: #fff;
+    border-left: 5px solid transparent;
+}
+
+.comment-analysis .card.positive {
+    border-color: #28a745;
+}
+
+.comment-analysis .card.neutral {
+    border-color: #6c757d;
+}
+
+.comment-analysis .card.negative {
+    border-color: #dc3545;
+}
+
+/* Progress bar styling */
+.progress {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    border-radius: 4px;
+}

@@ -1,0 +1,117 @@
+/* General Page Styling */
+body {
+  background: #f5f9f6;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #333;
+}
+
+/* Title */
+h2 {
+  font-weight: 700;
+  color: #222;
+}
+
+/* Stat Boxes */
+.stat-box {
+  background: #2e2651;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.stat-box small {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: normal;
+  margin-top: 5px;
+  color: #ddd;
+}
+
+/* Card Styling */
+.card-custom {
+  border-radius: 12px;
+  background: #ffffffcc;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* List Group */
+.list-group-item {
+  border: none;
+  padding: 10px 5px;
+  font-size: 1rem;
+}
+
+/* Keyword Status Labels */
+.keyword-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.keyword-status.positive {
+  background: #28a745;
+  color: white;
+}
+
+.keyword-status.negative {
+  background: #dc3545;
+  color: white;
+}
+
+.keyword-status.neutral {
+  background: #6c757d;
+  color: white;
+}
+
+/* Trending Topics Badge */
+.badge {
+  font-size: 0.85rem;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-weight: bold;
+}
+
+/* Buttons */
+.btn-success {
+  background-color: #3ca65c;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 20px;
+}
+
+.btn-success:hover {
+  background-color: #2d8f4b;
+}
+
+.btn-dark {
+  background-color: #2e2651;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 20px;
+}
+
+.btn-dark:hover {
+  background-color: #241b43;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .stat-box {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+}
+.keyword-status i {
+  margin-right: 5px;
+}
+
+.badge i {
+  margin-right: 4px;
+}
