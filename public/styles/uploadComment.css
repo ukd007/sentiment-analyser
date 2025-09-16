@@ -162,3 +162,18 @@ textarea:focus {
   color: #555;
   margin-top: auto;
 }
+.btn.analyze {
+  background-color: #4caf50;
+  color: white;
+  margin-left: 10px;
+}
+
+#sentiment-output {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f4f4f4;
+  border-radius: 6px;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
