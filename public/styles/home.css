@@ -107,7 +107,8 @@ body {
 /* Welcome Banner */
 .welcome-banner {
   background: #34a853;
-  width:1110px;
+  display: flex;
+  width:1300px;
   border-radius: 12px;
   margin: 1rem auto;
   text-align: left;
