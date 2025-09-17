@@ -3,25 +3,19 @@ import uuid
 from flask import Flask, request, jsonify
 import requests
 from flask_cors import CORS
-from dotenv import load_dotenv
-
-# Load .env file
-load_dotenv()
-
 
 app = Flask(__name__)
-CORS(app)  # allow cross-origin requests (for dev)
+CORS(app)
 
 # Read Hugging Face token from env
 HF_TOKEN = os.environ.get("HF_TOKEN")
 if not HF_TOKEN:
-    print("Warning: HF_TOKEN not set. Set HF_TOKEN env var to avoid permission issues.")
+    print("⚠️ Warning: HF_TOKEN not set. Set HF_TOKEN env var to avoid permission issues.")
 
-# CardiffNLP sentiment model
 HF_API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
 HEADERS = {"Authorization": f"Bearer {HF_TOKEN}"} if HF_TOKEN else {}
 
-# simple in-memory store for analysis results (keyed by uuid)
+# in-memory store for analysis results
 analysis_store = {}
 
 @app.route("/")
@@ -30,11 +24,6 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze_sentiment():
-    """
-    Accepts JSON { text: "...multi-line comments..." }
-    Splits lines, analyzes each line separately, builds structured payload,
-    stores with a uuid and returns redirect + analysis_id.
-    """
     data = request.get_json(force=True, silent=True) or {}
     text = data.get("text", "")
     if not text.strip():
@@ -54,29 +43,32 @@ def analyze_sentiment():
             resp.raise_for_status()
             hf_result = resp.json()
 
-            # DEBUG: print API result if needed
-            # print("HF RESULT:", hf_result)
+            # Hugging Face can return either:
+            # [[{"label":"LABEL_0","score":0.1}, {"label":"LABEL_1","score":0.7}, {"label":"LABEL_2","score":0.2}]]
+            # or
+            # [[{"label":"positive","score":0.97}, {"label":"neutral","score":0.01}, {"label":"negative","score":0.01}]]
 
-            # Handle both nested list and flat list responses
-            scores = []
-            if isinstance(hf_result, list):
-                if isinstance(hf_result[0], list):
-                    scores = hf_result[0]  # nested list case
-                elif isinstance(hf_result[0], dict):
-                    scores = hf_result     # flat list case
+            label = "Neutral"
+            confidence = 0.0
 
-            if scores:
-                best = max(scores, key=lambda x: x.get("score", 0.0))
-                raw_label = best.get("label", "")
+            if isinstance(hf_result, list) and isinstance(hf_result[0], list):
+                scores = hf_result[0]
+                best = max(scores, key=lambda x: x["score"])
+                raw_label = best.get("label", "").upper()
                 confidence = float(best.get("score", 0.0))
-                label_map = {"LABEL_0": "Negative", "LABEL_1": "Neutral", "LABEL_2": "Positive"}
+
+                # Map both styles
+                label_map = {
+                    "LABEL_0": "Negative",
+                    "LABEL_1": "Neutral",
+                    "LABEL_2": "Positive",
+                    "NEGATIVE": "Negative",
+                    "NEUTRAL": "Neutral",
+                    "POSITIVE": "Positive"
+                }
                 label = label_map.get(raw_label, "Neutral")
-            else:
-                label, confidence = "Neutral", 0.0
 
         except Exception as e:
-            # log the error
-            print(f"Error analyzing comment '{comment}': {e}")
             label, confidence = "Neutral", 0.0
 
         processed.append({"text": comment, "label": label, "confidence": confidence})
@@ -103,7 +95,6 @@ def analyze_sentiment():
         "comments": processed
     }
 
-    # store and return analysis_id
     analysis_id = uuid.uuid4().hex
     analysis_store[analysis_id] = payload
 
@@ -115,7 +106,6 @@ def analyze_sentiment():
 
 @app.route("/analyze-results", methods=["GET"])
 def get_results():
-    """Return stored analysis by id: GET /analyze-results?analysis_id=<id>"""
     analysis_id = request.args.get("analysis_id")
     if not analysis_id:
         return jsonify({"error": "analysis_id query param required"}), 400
