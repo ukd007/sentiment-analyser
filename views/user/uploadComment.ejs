@@ -55,47 +55,51 @@
         <textarea id="commentInput" placeholder="Paste Stakeholder comments here....."></textarea>
 
         <div class="button-group">
-          <div class="button-group">
           <button class="btn clear" onclick="document.getElementById('commentInput').value=''">Clear</button>
           <button class="btn analyze" onclick="analyzeComments()">Analyze</button>
         </div>
-         <pre id="sentiment-output"></pre>
-         
 
-        </div>
+        <!-- Debug output (optional, can be removed later) -->
+        <pre id="sentiment-output"></pre>
 
         <p class="tip">💡 Tip: Separate multiple comments with blank lines for better analysis</p>
       </div>
     </div>
   </div>
+
   <script>
-async function analyzeComments() {
-  const text = document.getElementById("commentInput").value.trim();
+    async function analyzeComments() {
+      const text = document.getElementById("commentInput").value.trim();
 
-  if (!text) {
-    alert("Please paste some comments first.");
-    return;
-  }
+      if (!text) {
+        alert("Please paste some comments first.");
+        return;
+      }
 
-  try {
-    const response = await fetch("http://127.0.0.1:5000/analyze", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: text })
-    });
+      try {
+        const response = await fetch("http://127.0.0.1:5000/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: text })
+        });
 
-    const result = await response.json();
+        const result = await response.json();
 
-    // Show the result in the <pre> block
-    document.getElementById("sentiment-output").textContent =
-      JSON.stringify(result, null, 2);
+        if (result.redirect) {
+          // ✅ Backend says to redirect to sentiment page
+          window.location.href = result.redirect;
+        } else {
+          // fallback: show raw result
+          document.getElementById("sentiment-output").textContent =
+            JSON.stringify(result, null, 2);
+        }
 
-  } catch (err) {
-    console.error("Error:", err);
-    alert("Failed to analyze sentiment. Check console.");
-  }
-}
-</script>
-
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Failed to analyze sentiment. Check console.");
+      }
+    }
+  </script>
+  <script src="/scripts/script.js"></script>
 </body>
 </html>

@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sentiment Analysis</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles/sentiment.css">
+  <link rel="stylesheet" href="/styles/sentiment.css">
 </head>
 <body>
   <div class="container py-4">
-    <!-- Page Title -->
     <h1 class="fw-bold">Sentiment Analysis</h1>
     <p class="text-muted">Analyze the emotional tone and sentiment of stakeholder comments</p>
 
-    <!-- Overall Sentiment Section -->
     <div class="row g-4 mb-4">
       <!-- Distribution Card -->
       <div class="col-md-6 col-lg-3">
@@ -21,63 +19,60 @@
           <h5 class="fw-semibold">📊 Overall Sentiment</h5>
           <p class="small text-muted">Distribution across all comments</p>
 
-          <!-- Progress Bars -->
           <div class="mb-3">
             <div class="d-flex justify-content-between">
               <span class="fw-medium text-success">Positive</span>
-              <span class="fw-semibold">35%</span>
+              <span id="posPercent" class="fw-semibold">0%</span>
             </div>
             <div class="progress">
-              <div class="progress-bar bg-success" style="width: 35%"></div>
+              <div id="posBar" class="progress-bar bg-success" style="width:0%"></div>
             </div>
           </div>
 
           <div class="mb-3">
             <div class="d-flex justify-content-between">
               <span class="fw-medium text-secondary">Neutral</span>
-              <span class="fw-semibold">37%</span>
+              <span id="neuPercent" class="fw-semibold">0%</span>
             </div>
             <div class="progress">
-              <div class="progress-bar bg-secondary" style="width: 37%"></div>
+              <div id="neuBar" class="progress-bar bg-secondary" style="width:0%"></div>
             </div>
           </div>
 
           <div>
             <div class="d-flex justify-content-between">
               <span class="fw-medium text-danger">Negative</span>
-              <span class="fw-semibold">28%</span>
+              <span id="negPercent" class="fw-semibold">0%</span>
             </div>
             <div class="progress">
-              <div class="progress-bar bg-danger" style="width: 28%"></div>
+              <div id="negBar" class="progress-bar bg-danger" style="width:0%"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Positive Comments -->
+      <!-- Positive / Neutral / Negative count cards -->
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 p-3 text-center positive-card">
           <h6 class="fw-semibold">Positive Comments</h6>
-          <p class="display-6 fw-bold text-success mb-1">432</p>
-          <p class="small text-success">+12% from last week</p>
+          <p id="pos-count" class="display-6 fw-bold text-success mb-1">0</p>
+          <p class="small text-success">--</p>
         </div>
       </div>
 
-      <!-- Neutral Comments -->
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 p-3 text-center neutral-card">
           <h6 class="fw-semibold">Neutral Comments</h6>
-          <p class="display-6 fw-bold text-secondary mb-1">461</p>
-          <p class="small text-secondary">+5% from last week</p>
+          <p id="neu-count" class="display-6 fw-bold text-secondary mb-1">0</p>
+          <p class="small text-secondary">--</p>
         </div>
       </div>
 
-      <!-- Negative Comments -->
       <div class="col-md-6 col-lg-3">
         <div class="card h-100 p-3 text-center negative-card">
           <h6 class="fw-semibold">Negative Comments</h6>
-          <p class="display-6 fw-bold text-danger mb-1">354</p>
-          <p class="small text-danger">-3% from last week</p>
+          <p id="neg-count" class="display-6 fw-bold text-danger mb-1">0</p>
+          <p class="small text-danger">--</p>
         </div>
       </div>
     </div>
@@ -87,83 +82,13 @@
       <h4 class="fw-bold mb-2">Comment-by-Comment Analysis</h4>
       <p class="text-muted mb-4">Detailed sentiment analysis for each stakeholder comment</p>
 
-      <!-- Comment (Positive) -->
-      <div class="card mb-3 p-3 border-0 shadow-sm comment-card positive">
-        <div class="d-flex align-items-center mb-2">
-          <span class="badge bg-success me-2">Positive</span>
-          <small class="text-muted">Comment #1</small>
-        </div>
-        <p class="mb-2">
-          I strongly support this legislation as it addresses critical environmental concerns
-          that have been overlooked for too long. The proposed measures are comprehensive and well-thought-out.
-        </p>
-        <div class="d-flex justify-content-end">
-          <small class="fw-semibold text-success">Confidence: 92%</small>
-        </div>
-      </div>
-
-      <!-- Comment (Negative) -->
-      <div class="card mb-3 p-3 border-0 shadow-sm comment-card negative">
-        <div class="d-flex align-items-center mb-2">
-          <span class="badge bg-danger me-2">Negative</span>
-          <small class="text-muted">Comment #2</small>
-        </div>
-        <p class="mb-2">
-          The budget allocation seems completely insufficient for the scope of this project.
-          I have serious concerns about whether this can be implemented effectively.
-        </p>
-        <div class="d-flex justify-content-end">
-          <small class="fw-semibold text-danger">Confidence: 87%</small>
-        </div>
+      <div id="comments-list">
+        <!-- JS will inject comment cards here -->
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-async function loadSentimentResults() {
-  try {
-    const response = await fetch("http://127.0.0.1:5000/analyze-results"); // 👈 new API route
-    const data = await response.json();
-
-    // Update distribution bars
-    document.querySelector(".sentiment-distribution .bg-success").style.width = data.distribution.positive + "%";
-    document.querySelector(".sentiment-distribution .bg-secondary").style.width = data.distribution.neutral + "%";
-    document.querySelector(".sentiment-distribution .bg-danger").style.width = data.distribution.negative + "%";
-
-    // Update counts
-    document.querySelector(".positive-card .display-6").textContent = data.counts.positive;
-    document.querySelector(".neutral-card .display-6").textContent = data.counts.neutral;
-    document.querySelector(".negative-card .display-6").textContent = data.counts.negative;
-
-    // Fill comments
-    const commentsContainer = document.querySelector(".comment-analysis");
-    commentsContainer.innerHTML = "<h4 class='fw-bold mb-2'>Comment-by-Comment Analysis</h4>";
-
-    data.comments.forEach((c, i) => {
-      const card = document.createElement("div");
-      card.className = `card mb-3 p-3 border-0 shadow-sm comment-card ${c.label.toLowerCase()}`;
-      card.innerHTML = `
-        <div class="d-flex align-items-center mb-2">
-          <span class="badge bg-${c.label === "Positive" ? "success" : c.label === "Negative" ? "danger" : "secondary"} me-2">${c.label}</span>
-          <small class="text-muted">Comment #${i + 1}</small>
-        </div>
-        <p class="mb-2">${c.text}</p>
-        <div class="d-flex justify-content-end">
-          <small class="fw-semibold text-${c.label === "Positive" ? "success" : c.label === "Negative" ? "danger" : "secondary"}">
-            Confidence: ${(c.confidence * 100).toFixed(0)}%
-          </small>
-        </div>
-      `;
-      commentsContainer.appendChild(card);
-    });
-  } catch (err) {
-    console.error("Error loading sentiment results:", err);
-  }
-}
-
-loadSentimentResults();
-</script>
-
+  <script src="/scripts/sentiment.js"></script>
 </body>
 </html>
